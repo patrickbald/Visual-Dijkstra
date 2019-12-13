@@ -21,12 +21,16 @@ int main(){
 
 	int startX, startY, endX, endY;
 
-	welcome(startX, startY, endX, endY);
+	//welcome(startX, startY, endX, endY);
+	
+	pair<int, int> start = make_pair(startX, startY);
+	pair<int, int> end = make_pair(endX, endY);
 
 	Board board;
 	
 	board.populate();
-	board.findPath(startX, startY, endX, endY);
+	board.findPath(start, end);
+	board.displayBoard();
 	//board.displayPath();
 
 	return 0;

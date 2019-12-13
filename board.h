@@ -9,16 +9,18 @@
 using namespace std;
 
 const int BOARDSIZE = 8;
+typedef pair<int, int> iPair;
+typedef pair< int, pair<int, int> > pPair;
 
 class Board {
 	public:
 		Board();
 		~Board();
 		void populate();
-		void findPath(int, int, int, int);
+		void findPath( pair<int, int>, pair<int, int> );
+		void displayBoard();
 		void displayPath();
 	private:
-		int dijkBoard[BOARDSIZE][BOARDSIZE];
-		int V = BOARDSIZE * BOARDSIZE;
+		int b[BOARDSIZE][BOARDSIZE];
 
 };
