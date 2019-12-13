@@ -14,10 +14,11 @@ class Board {
 	public:
 		Board();
 		~Board();
-		populate();
-		findPath(int, int, int, int);
-		displayPath();
+		void populate();
+		void findPath(int, int, int, int);
+		void displayPath();
 	private:
 		int dijkBoard[BOARDSIZE][BOARDSIZE];
+		int V = BOARDSIZE * BOARDSIZE;
 
-}
+};

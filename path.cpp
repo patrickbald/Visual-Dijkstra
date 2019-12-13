@@ -13,6 +13,8 @@
 
 using namespace std;
 
+#include "gfx.h"
+
 void welcome(int&, int&, int&, int&);
 
 int main(){
@@ -24,8 +26,8 @@ int main(){
 	Board board;
 	
 	board.populate();
-	board.findPath();
-	board.displayPath();
+	board.findPath(startX, startY, endX, endY);
+	//board.displayPath();
 
 	return 0;
 }
