@@ -33,6 +33,8 @@ class Board {
 		void initDistance();
 		void addToPath(iPair, iPair);
 		map <iPair, iPair> getPath();
+		void displayInstructions();
+		void dispWeights();
 	private:
 		int b[BOARDSIZE][BOARDSIZE];
 		int distance[BOARDSIZE][BOARDSIZE];

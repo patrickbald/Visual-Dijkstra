@@ -58,6 +58,8 @@ void Board::displayBoard(){
 
 int  Board::findPath( iPair start, iPair end ){ // map <iPair, iPair> 
 
+	dispWeights();
+	
 	set< iPair > visited; // keep track of visited locations
 	//map< iPair, iPair > path; // now global 
 	
@@ -86,22 +88,51 @@ int  Board::findPath( iPair start, iPair end ){ // map <iPair, iPair>
 
 		for(auto n : getNeighbors(loc)){
 			if(distance[loc.first][loc.second] + b[n.first][n.second] < distance[n.first][n.second]){
-				//addToPath(loc, n);
+				addToPath(loc, n);
 				distance[n.first][n.second] = distance[loc.first][loc.second] + b[n.first][n.second];
 				pq.push(make_pair(distance[n.first][n.second], n));
 			}
 		}
-
+		// change rectangle back to original color
 		gfx_color(100, 0, 255);
 		gfx_fill_rectangle(50*loc.first + 220 - offset, 50*loc.second + 220 - offset, l, l);
+
+		// print out weight of current vertex
 		char buffer[16];
 		int weight = b[loc.first][loc.second];
 		sprintf(buffer, "%d", weight);
 		gfx_color(255, 0, 0);
 		gfx_text(49*loc.first + 220, 51*loc.second + 220, buffer);
+
+
+		displayInstructions();
+
 		gfx_flush();
 		usleep(20000);
 	}
+	
+	iPair current = end;
+	while(current != start){
+		gfx_color(255, 0, 0);
+		gfx_fill_rectangle(current.first*50 + 220 - offset, current.second*50 + 220 - offset, l, l);
+		
+		char buffer[16];
+		int weight = b[current.first][current.second];
+		sprintf(buffer, "%d", weight);
+		gfx_color(255, 255, 255);
+		gfx_text(49*current.first + 220, 51*current.second + 220, buffer);
+		current = path[current];
+	}
+	
+	// color in first node 	
+	gfx_color(255, 0, 0);
+	gfx_fill_rectangle(current.first*50 + 220 - offset, current.second*50 + 220 - offset, l, l);
+		
+	char buffer[16];
+	int weight = b[current.first][current.second];
+	sprintf(buffer, "%d", weight);
+	gfx_color(255, 255, 255);
+	gfx_text(49*current.first + 220, 51*current.second + 220, buffer);
 
 	return distance[end.first][end.second];
 }
@@ -122,7 +153,7 @@ set < iPair > Board::getNeighbors(iPair loc){
 }
 
 void Board::addToPath(iPair loc, iPair n){
-	//path{n} = loc;
+	path[n] = loc;
 }
 
 map< iPair, iPair > Board::getPath(){ return path; }
@@ -132,6 +163,32 @@ void Board::displayPath(){
 	for(int c = 0; c < BOARDSIZE; c++){
 		for(int r = 0; r < BOARDSIZE; r++){
 			cout << c << " " << r << " 	" << distance[c][r] << endl;
+		}
+	}
+
+}
+
+void Board::displayInstructions(){
+
+	
+		gfx_color(255, 255, 255);
+		gfx_text(250, 100, "Visual representation of Dijkstra's algorithm");
+		gfx_text(220, 120, "Press space to build board initially and after every run");
+		gfx_text(180, 140, "After building board, enter 4 integers for shortest path coordinates");
+		gfx_text(350, 160, "Press Q to exit");
+
+}
+
+
+void Board::dispWeights(){
+	
+	for(int c = 0; c < BOARDSIZE; c++){
+		for(int r = 0; r < BOARDSIZE; r++){
+			char buffer[16];
+			int weight = b[c][r];
+			sprintf(buffer, "%d", weight);
+			gfx_color(255, 0, 0);
+			gfx_text(49*c + 220, 51*r + 220, buffer);
 		}
 	}
 
