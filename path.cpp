@@ -16,60 +16,60 @@ using namespace std;
 #include "gfx2.h"
 
 void welcome(int&, int&, int&, int&);
+void start(int&, int&, int&, int&);
 
 int main(){
 
 	bool loop = true;
-
-	gfx_open(wd, ht, "Dijkstra's");
-	gfx_color(100, 0, 255);
-	int startR = 200, startC = 200;
-	for(int c = 0; c < BOARDSIZE; c++){
-		for(int r = 0; r < BOARDSIZE; r++){
-			gfx_color(100, 0, 255);
-			gfx_fill_rectangle(startC + 50*c - offset, startR + 50*r - offset, l, l);
-			gfx_color(0, 255, 0);
-			gfx_point(startC + 50*c, startR + 50*r);
-			gfx_flush();
-		}
-	}
-
+	char c;
+	int distance;
 	int startX, startY, endX, endY;
 
-	welcome(startX, startY, endX, endY);
-	gfx_color(255, 0, 0);
-	gfx_fill_rectangle(startC + 50*endX - offset, startR + 50*endY - offset, l, l);
-	gfx_flush();
+	gfx_open(wd, ht, "Dijkstra's");
 	
-	pair<int, int> start = make_pair(startX, startY);
-	pair<int, int> end = make_pair(endX, endY);
+	cout << " ------------------------------- " << endl;
+	cout << "    Welcome to shortest path!    " << endl;
+	cout << " ------------------------------- " << endl;
 
-	Board board;
+	gfx_text(250, 100, "Visual representation of Dijkstra's algorithm");
+	//start(startX, startY, endX, endY);	
+
+	//welcome(startX, startY, endX, endY);
+	//gfx_color(255, 0, 0);
+	//gfx_fill_rectangle(startC + 50*endX - offset, startR + 50*endY - offset, l, l);
+	//gfx_flush();
 	
-	board.populate();
-	int distance = board.findPath(start, end); // map < iPair, iPair >
+	//pair<int, int> start = make_pair(startX, startY);
+	//pair<int, int> end = make_pair(endX, endY);
 
+	Board board; // Board object
+	//board.populate(); // fill in weights of board 
+	while(loop) {
+		c = gfx_wait();
+		if(c == ' '){
+			start(startX, startY, endX, endY);
+			pair<int, int> start = make_pair(startX, startY);
+			pair<int, int> end = make_pair(endX, endY);
+			board.populate();
+			distance = board.findPath(start, end); // map < iPair, iPair >
+			board.displayBoard();
+			cout << endl;
+			cout << "The shortest distance from (" << startX << " , " << startY << ")";
+			cout << " to "<< "( " << endX << " , " << endY << " )  is: " << distance << endl;
+		} else if(c == 'q')
+			break;
+	}
 	//board.displayBoard();
-	//board.displayPath();
 
-	cout << endl;
-	cout << "The shortest distance from (" << startX << " , " << startY << ")";
-	cout << " to "<< "( " << endX << " , " << endY << " )  is: " << distance << endl;
+	//cout << endl;
+	//cout << "The shortest distance from (" << startX << " , " << startY << ")";
+	//cout << " to "<< "( " << endX << " , " << endY << " )  is: " << distance << endl;
 	
-	//for(auto c : path){
-	//	cout << (c.first).first << " " << (c.first).second << " " << (c.second).first << " " << (c.second).second << endl;
-//	}
-
-	
-
 	return 0;
 }
 
 void welcome(int & startX, int & startY, int & endX, int & endY){
 	
-	cout << " ------------------------------- " << endl;
-	cout << "    Welcome to shortest path!    " << endl;
-	cout << " ------------------------------- " << endl;
 
 	cout << "Enter a starting coordinate: ";
 	cin >> startX >> startY;
@@ -81,4 +81,18 @@ void welcome(int & startX, int & startY, int & endX, int & endY){
 
 }
 
+void start(int & startX, int & startY, int & endX, int & endY){
+	gfx_color(100, 0, 255);
+	int startR = 200, startC = 200;
+	for(int c = 0; c < BOARDSIZE; c++){
+		for(int r = 0; r < BOARDSIZE; r++){
+			gfx_fill_rectangle(startC + 50*c - offset, startR + 50*r - offset, l, l);
+			gfx_flush();
+		}
+	}
 
+	welcome(startX, startY, endX, endY);
+	gfx_color(255, 0, 0);
+	gfx_fill_rectangle(startC + 50*endX - offset, startR + 50*endY - offset, l, l);
+	gfx_flush();
+}

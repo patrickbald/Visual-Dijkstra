@@ -89,8 +89,7 @@ int  Board::findPath( iPair start, iPair end ){ // map <iPair, iPair>
 
 		for(auto n : getNeighbors(loc)){
 			if(distance[loc.first][loc.second] + b[n.first][n.second] < distance[n.first][n.second]){
-				//path{n} = loc;
-				//path.insert();
+				//addToPath(loc, n);
 				distance[n.first][n.second] = distance[loc.first][loc.second] + b[n.first][n.second];
 				pq.push(make_pair(distance[n.first][n.second], n));
 			}
@@ -103,7 +102,6 @@ int  Board::findPath( iPair start, iPair end ){ // map <iPair, iPair>
 	}
 
 	return distance[end.first][end.second];
-	//return path;
 
 }
 
@@ -121,6 +119,12 @@ set < iPair > Board::getNeighbors(iPair loc){
 	return neighbors;
 
 }
+
+void Board::addToPath(iPair loc, iPair n){
+	//path{n} = loc;
+}
+
+map< iPair, iPair > Board::getPath(){ return path; }
 
 void Board::displayPath(){
 	

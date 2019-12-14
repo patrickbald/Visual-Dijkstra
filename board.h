@@ -29,6 +29,8 @@ class Board {
 		void displayPath();
 		set < iPair > getNeighbors( iPair );
 		void initDistance();
+		void addToPath(iPair, iPair);
+		map <iPair, iPair> getPath();
 	private:
 		int b[BOARDSIZE][BOARDSIZE];
 		int distance[BOARDSIZE][BOARDSIZE];
