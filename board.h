@@ -14,13 +14,17 @@ using namespace std;
 const int BOARDSIZE = 8;
 typedef pair<int, int> iPair;
 typedef pair< int, pair<int, int> > pPair;
+const int wd = 800;
+const int ht = 800;
+const int l = 48;
+const int offset = 48/2;
 
 class Board {
 	public:
 		Board();
 		~Board();
 		void populate();
-		map< iPair, iPair > findPath( pair<int, int>, pair<int, int> );
+		int findPath( pair<int, int>, pair<int, int> ); // map < iPair, iPair >
 		void displayBoard();
 		void displayPath();
 		set < iPair > getNeighbors( iPair );
@@ -28,4 +32,5 @@ class Board {
 	private:
 		int b[BOARDSIZE][BOARDSIZE];
 		int distance[BOARDSIZE][BOARDSIZE];
+		map < iPair, iPair > path;
 };

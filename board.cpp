@@ -17,6 +17,7 @@
 #include <utility>
 #include <iomanip>
 #include <map>
+#include <unistd.h>
 
 Board::Board(){
 
@@ -58,10 +59,10 @@ void Board::displayBoard(){
 
 }
 
-map <iPair, iPair> Board::findPath( iPair start, iPair end ){
-	
+int  Board::findPath( iPair start, iPair end ){ // map <iPair, iPair> 
+
 	set< iPair > visited; // keep track of visited locations
-	map< iPair, iPair > path;
+	//map< iPair, iPair > path; // now global 
 	
 	// start.first = column, start.second = row 
 	distance[start.first][start.second] = b[start.first][start.second];
@@ -76,6 +77,11 @@ map <iPair, iPair> Board::findPath( iPair start, iPair end ){
 		
 		iPair loc = pq.top().second; // current location
 		pq.pop();
+		
+		gfx_color(0, 255, 0);
+		gfx_fill_rectangle(50*loc.first + 200 - offset, 50*loc.second + 200 - offset, l, l);
+		gfx_flush();
+		usleep(20000);
 
 		// skip locations have already been too
 		if (visited.find(loc) != visited.end()) continue; 
@@ -83,19 +89,24 @@ map <iPair, iPair> Board::findPath( iPair start, iPair end ){
 
 		for(auto n : getNeighbors(loc)){
 			if(distance[loc.first][loc.second] + b[n.first][n.second] < distance[n.first][n.second]){
-				path{n} = loc;
+				//path{n} = loc;
+				//path.insert();
 				distance[n.first][n.second] = distance[loc.first][loc.second] + b[n.first][n.second];
 				pq.push(make_pair(distance[n.first][n.second], n));
 			}
 		}
+
+		gfx_color(100, 0, 255);
+		gfx_fill_rectangle(50*loc.first + 200 - offset, 50*loc.second + 200 - offset, l, l);
+		gfx_flush();
+		usleep(20000);
 	}
 
-	//return distance[end.first][end.second];
-	return path;
+	return distance[end.first][end.second];
+	//return path;
 
 }
 
-// get neighbors method
 set < iPair > Board::getNeighbors(iPair loc){
 
 	set <iPair > neighbors;
@@ -121,12 +132,3 @@ void Board::displayPath(){
 	}
 
 }
-
-
-	/// @TODO: Remove
-	/*
-	set <pair <int, int> > s;
-	s.insert(make_pair(1, 10));
-	if (s.find(make_pair(1, 10)) != s.end()) cout << "FOUND!!!" << endl;
-	if (s.find(make_pair(1, 5)) != s.end()) cout << "FOUND SECOND!!!" << endl;
-	*/
