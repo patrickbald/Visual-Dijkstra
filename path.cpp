@@ -15,7 +15,7 @@ using namespace std;
 
 #include "gfx2.h"
 
-void welcome(int&, int&, int&, int&);
+void getCoordinates(int&, int&, int&, int&);
 void start(int&, int&, int&, int&);
 
 int main(){
@@ -31,22 +31,16 @@ int main(){
 	cout << "    Welcome to shortest path!    " << endl;
 	cout << " ------------------------------- " << endl;
 
-	gfx_text(250, 100, "Visual representation of Dijkstra's algorithm");
-	//start(startX, startY, endX, endY);	
-
-	//welcome(startX, startY, endX, endY);
-	//gfx_color(255, 0, 0);
-	//gfx_fill_rectangle(startC + 50*endX - offset, startR + 50*endY - offset, l, l);
-	//gfx_flush();
-	
-	//pair<int, int> start = make_pair(startX, startY);
-	//pair<int, int> end = make_pair(endX, endY);
-
-	Board board; // Board object
-	//board.populate(); // fill in weights of board 
 	while(loop) {
+		gfx_color(255, 255, 255);
+		gfx_text(250, 100, "Visual representation of Dijkstra's algorithm");
+		gfx_text(220, 120, "Press space to build board initially and after every run");
+		gfx_text(180, 140, "After building board, enter 4 integers for shortest path coordinates");
+		gfx_text(350, 160, "Press Q to exit");
 		c = gfx_wait();
+		gfx_clear();
 		if(c == ' '){
+			Board board;
 			start(startX, startY, endX, endY);
 			pair<int, int> start = make_pair(startX, startY);
 			pair<int, int> end = make_pair(endX, endY);
@@ -59,31 +53,28 @@ int main(){
 		} else if(c == 'q')
 			break;
 	}
-	//board.displayBoard();
-
-	//cout << endl;
-	//cout << "The shortest distance from (" << startX << " , " << startY << ")";
-	//cout << " to "<< "( " << endX << " , " << endY << " )  is: " << distance << endl;
 	
 	return 0;
 }
 
-void welcome(int & startX, int & startY, int & endX, int & endY){
+void getCoordinates(int & startX, int & startY, int & endX, int & endY){
+	char c;
+
+	c = gfx_wait();
+	startX = c - '0';
+	c = gfx_wait();
+	startY = c - '0';
+	gfx_color(0, 255, 0);
+	gfx_fill_rectangle(startC + 50*startX - offset, startR + 50*startY - offset, l, l);
+	c = gfx_wait();
+	endX = c - '0';
+	c = gfx_wait();
+	endY = c - '0';
 	
-
-	cout << "Enter a starting coordinate: ";
-	cin >> startX >> startY;
-	cout << endl;
-
-	cout << "Enter an ending coordinate: ";
-	cin >> endX >> endY;
-	cout << endl;
-
 }
 
 void start(int & startX, int & startY, int & endX, int & endY){
 	gfx_color(100, 0, 255);
-	int startR = 200, startC = 200;
 	for(int c = 0; c < BOARDSIZE; c++){
 		for(int r = 0; r < BOARDSIZE; r++){
 			gfx_fill_rectangle(startC + 50*c - offset, startR + 50*r - offset, l, l);
@@ -91,7 +82,7 @@ void start(int & startX, int & startY, int & endX, int & endY){
 		}
 	}
 
-	welcome(startX, startY, endX, endY);
+	getCoordinates(startX, startY, endX, endY);
 	gfx_color(255, 0, 0);
 	gfx_fill_rectangle(startC + 50*endX - offset, startR + 50*endY - offset, l, l);
 	gfx_flush();

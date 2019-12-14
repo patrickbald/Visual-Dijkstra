@@ -37,7 +37,6 @@ void Board::initDistance(){
 }
 
 void Board::populate(){
-
 	srand(time(0));
 	for(int c = 0; c < BOARDSIZE; c++){
 		for(int r = 0; r < BOARDSIZE; r++){
@@ -48,8 +47,6 @@ void Board::populate(){
 }
 
 void Board::displayBoard(){
-
-
 	for(int c = 0; c < BOARDSIZE; c++){
 		for(int r = 0; r < BOARDSIZE; r++){
 			cout << setw(5) << left << b[c][r];
@@ -79,7 +76,7 @@ int  Board::findPath( iPair start, iPair end ){ // map <iPair, iPair>
 		pq.pop();
 		
 		gfx_color(0, 255, 0);
-		gfx_fill_rectangle(50*loc.first + 200 - offset, 50*loc.second + 200 - offset, l, l);
+		gfx_fill_rectangle(50*loc.first + 220 - offset, 50*loc.second + 220 - offset, l, l);
 		gfx_flush();
 		usleep(20000);
 
@@ -96,13 +93,17 @@ int  Board::findPath( iPair start, iPair end ){ // map <iPair, iPair>
 		}
 
 		gfx_color(100, 0, 255);
-		gfx_fill_rectangle(50*loc.first + 200 - offset, 50*loc.second + 200 - offset, l, l);
+		gfx_fill_rectangle(50*loc.first + 220 - offset, 50*loc.second + 220 - offset, l, l);
+		char buffer[16];
+		int weight = b[loc.first][loc.second];
+		sprintf(buffer, "%d", weight);
+		gfx_color(255, 0, 0);
+		gfx_text(49*loc.first + 220, 51*loc.second + 220, buffer);
 		gfx_flush();
 		usleep(20000);
 	}
 
 	return distance[end.first][end.second];
-
 }
 
 set < iPair > Board::getNeighbors(iPair loc){
@@ -127,7 +128,6 @@ void Board::addToPath(iPair loc, iPair n){
 map< iPair, iPair > Board::getPath(){ return path; }
 
 void Board::displayPath(){
-	
 	cout << "Vertex	" << "Distance" << endl;
 	for(int c = 0; c < BOARDSIZE; c++){
 		for(int r = 0; r < BOARDSIZE; r++){
