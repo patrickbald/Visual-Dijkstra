@@ -5,6 +5,9 @@
 
 #include <vector>
 #include <set>
+#include <utility>
+#include <climits>
+#include <map>
 
 using namespace std;
 
@@ -17,10 +20,12 @@ class Board {
 		Board();
 		~Board();
 		void populate();
-		void findPath( pair<int, int>, pair<int, int> );
+		map< iPair, iPair > findPath( pair<int, int>, pair<int, int> );
 		void displayBoard();
 		void displayPath();
+		set < iPair > getNeighbors( iPair );
+		void initDistance();
 	private:
 		int b[BOARDSIZE][BOARDSIZE];
-
+		int distance[BOARDSIZE][BOARDSIZE];
 };

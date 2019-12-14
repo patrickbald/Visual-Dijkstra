@@ -21,7 +21,7 @@ int main(){
 
 	int startX, startY, endX, endY;
 
-	//welcome(startX, startY, endX, endY);
+	welcome(startX, startY, endX, endY);
 	
 	pair<int, int> start = make_pair(startX, startY);
 	pair<int, int> end = make_pair(endX, endY);
@@ -29,9 +29,15 @@ int main(){
 	Board board;
 	
 	board.populate();
-	board.findPath(start, end);
+	map< iPair, iPair> path = board.findPath(start, end);
 	board.displayBoard();
 	//board.displayPath();
+
+	cout << endl;
+//	cout << "The shortest distance from (" << startX << " , " << startY << ")";
+//	cout << " to "<< "( " << endX << " , " << endY << " )  is: " << distance << endl;
+	
+	//while( ){}
 
 	return 0;
 }
