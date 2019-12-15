@@ -29,12 +29,8 @@ int main(){
 
 	gfx_open(wd, ht, "Dijkstra's");
 	
-	cout << " ------------------------------- " << endl;
-	cout << "    Welcome to shortest path!    " << endl;
-	cout << " ------------------------------- " << endl;
-
 	dispInstructions();
-	
+
 	while(loop) {
 		c = gfx_wait();
 		gfx_clear();
@@ -42,12 +38,10 @@ int main(){
 			Board board;
 			board.populate();
 			start(startX, startY, endX, endY, board);
-			pair<int, int> start = make_pair(startX, startY);
-			pair<int, int> end = make_pair(endX, endY);
+			iPair start = make_pair(startX, startY);
+			iPair end = make_pair(endX, endY);
 			distance = board.findPath(start, end); // map < iPair, iPair >
 			dispScore(distance);
-			cout << "The shortest distance from (" << startX << " , " << startY << ")";
-			cout << " to "<< "( " << endX << " , " << endY << " )  is: " << distance << endl;
 		} else if(c == 'q')
 			break;
 	}
@@ -58,7 +52,7 @@ int main(){
 void getCoordinates(int & startX, int & startY, int & endX, int & endY, Board & board){
 	char c;
 
-	board.dispWeights();
+	board.dispAllWeights();
 
 	c = gfx_wait();
 	startX = c - '0';
@@ -70,37 +64,49 @@ void getCoordinates(int & startX, int & startY, int & endX, int & endY, Board & 
 	endX = c - '0';
 	c = gfx_wait();
 	endY = c - '0';
+	gfx_color(255, 0, 0);
+	gfx_fill_rectangle(startC + 50*endX - offset, startR + 50*endY - offset, l, l);
+	gfx_flush();
 	
 }
 
 void start(int & startX, int & startY, int & endX, int & endY, Board & board){
-	gfx_color(100, 0, 255);
+	gfx_color(0, 0, 252);
 	for(int c = 0; c < BOARDSIZE; c++){
 		for(int r = 0; r < BOARDSIZE; r++){
 			gfx_fill_rectangle(startC + 50*c - offset, startR + 50*r - offset, l, l);
 			gfx_flush();
 		}
 	}
-	
+
+	for(int c = 0; c < 8; c++){
+		char buffer[16];
+		sprintf(buffer, "%d", c);
+		gfx_color(255, 255, 255);
+		gfx_text(170, (l+2)*c + 220, buffer);
+	}
+
+	for(int r = 0; r < 8; r++){
+		char buffer[16];
+		sprintf(buffer, "%d", r);
+		gfx_color(255, 255, 255);
+		gfx_text(220 + (l+2)*r, 180, buffer);
+	}
+
 	gfx_color(255, 255, 255);		
 	dispInstructions();
 
 	getCoordinates(startX, startY, endX, endY, board);
-	gfx_color(255, 0, 0);
-	gfx_fill_rectangle(startC + 50*endX - offset, startR + 50*endY - offset, l, l);
-	gfx_flush();
 }
 
 void dispInstructions(){
-	
-	gfx_text(250, 100, "Visual representation of Dijkstra's algorithm");
-	gfx_text(220, 120, "Press space to build board initially and after every run");
-	gfx_text(180, 140, "After building board, enter 4 integers for shortest path coordinates");
-	gfx_text(350, 160, "Press Q to exit");
+	gfx_text(250, 80, "Visual representation of Dijkstra's algorithm");
+	gfx_text(220, 100, "Press space to build board initially and after every run");
+	gfx_text(180, 120, "After building board, enter 4 integers for shortest path coordinates");
+	gfx_text(350, 140, "Press Q to exit");
 }
 
 void dispScore(int distance){
-
 	char buffer[16];
 	sprintf(buffer, "%d", distance);
 	gfx_color(255, 255, 255);
