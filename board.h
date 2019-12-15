@@ -27,16 +27,15 @@ class Board {
 		~Board();
 		void populate();
 		int findPath( pair<int, int>, pair<int, int> ); // map < iPair, iPair >
-		void displayBoard();
-		void displayPath();
 		set < iPair > getNeighbors( iPair );
 		void initDistance();
 		void addToPath(iPair, iPair);
 		map <iPair, iPair> getPath();
 		void displayInstructions();
-		void dispWeights();
+		void dispAllWeights(); // generalized to every weight
+		void drawWeight(iPair); // specific to a node
 	private:
-		int b[BOARDSIZE][BOARDSIZE];
+		int b[BOARDSIZE][BOARDSIZE]; 
 		int distance[BOARDSIZE][BOARDSIZE];
 		map < iPair, iPair > path;
 };
