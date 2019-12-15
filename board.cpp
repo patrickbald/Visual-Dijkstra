@@ -1,7 +1,6 @@
 /*
  * Patrick Bald
  * Class implementation 
- *
  */
 
 #include <queue>
@@ -19,11 +18,7 @@
 #include <map>
 #include <unistd.h>
 
-Board::Board(){
-
-	initDistance();
-
-}
+Board::Board(){ initDistance(); }
 
 Board::~Board(){}
 
@@ -82,9 +77,6 @@ int  Board::findPath( iPair start, iPair end ){
 				pq.push(make_pair(distance[n.first][n.second], n));
 			}
 		}
-		// change rectangle back to original color
-		//gfx_color(100, 0, 255);
-		//gfx_fill_rectangle(50*loc.first + 220 - offset, 50*loc.second + 220 - offset, l, l);
 
 		// print out weight of current vertex
 		gfx_color(255, 0, 0);
