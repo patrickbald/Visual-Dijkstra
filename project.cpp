@@ -6,11 +6,7 @@
  *
  * A c++, visual implementation of Dijkstra's shortest path algorithm
  *
- */
-
-
-
- 
+ */ 
 
 #include <iostream>
 #include "board.h"
